@@ -1,0 +1,67 @@
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
+    defaultConfig {
+        applicationId "com.ppjun.greendao"
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs{
+        debug {
+
+
+            keyAlias 'ppjun'
+            keyPassword 'android'
+            storeFile file('D:/Git/Greendao/ppjun.jks')
+            storePassword 'android'
+        }
+        release{
+            keyAlias 'ppjun'
+            keyPassword 'android'
+            storeFile file('D:/Git/Greendao/ppjun.jks')
+            storePassword 'android'
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug{
+
+            minifyEnabled true
+            shrinkResources true
+
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions{
+        abortOnError true
+    }
+    greendao{
+        schemaVersion 1                   //数据库 版本号
+        targetGenDir 'src/main/java'    //生成DaoMaster类文件夹
+        daoPackage   'com.ppjun.greendao.db'  //生成DaoMaster类包名
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.0.0'
+    testCompile 'junit:junit:4.12'
+    compile 'org.greenrobot:greendao:3.1.0'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'com.android.support:recyclerview-v7:25.0.0'
+    compile 'com.android.support:design:25.0.0'
+}

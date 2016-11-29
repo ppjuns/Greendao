@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/item_note_bg"
+                android:paddingBottom="8.7dp"
+                android:paddingLeft="21dp"
+                android:paddingRight="22dp"
+                android:paddingTop="15.3dp"
+    >
+
+    <TextView
+        android:id="@+id/tv_show_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tv_show_date"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:ellipsize="end"
+        android:fontFamily="noto-sans-cjk-light"
+        android:maxLines="1"
+        android:text="123"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/tv_show_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="6dp"
+        android:fontFamily="noto-sans-cjk-regula"
+        android:gravity="left"
+        android:maxLines="1"
+        android:text="1天前"
+        android:textColor="@color/colorPrimary"
+        android:textSize="12sp"
+        />
+
+</RelativeLayout>

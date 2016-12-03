@@ -17,7 +17,7 @@ public interface AddEditContract {
 
 
     interface View extends BaseView<Presenter> {
-
+       void  finishView();
     }
 
     interface Presenter extends BasePresenter {

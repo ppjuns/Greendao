@@ -36,15 +36,7 @@ public class ShowNotePresenter implements ShowNoteConstract.Presenter {
 
     }
 
-    @Override
-    public void delete(int id) {
 
-    }
-
-    @Override
-    public void update() {
-
-    }
 
     @Override
     public List<Note> query() {
@@ -55,8 +47,13 @@ public class ShowNotePresenter implements ShowNoteConstract.Presenter {
 
     @Override
     public void toAddEditView(Context context) {
-        Bundle bundle=new Bundle();
-        bundle.putBoolean("isAdd",true);
-        IntentUtil.startActivity(context, AddEditActivity.class,bundle);
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isAdd", true);
+        IntentUtil.startActivity(context, AddEditActivity.class, bundle);
+    }
+
+    @Override
+    public void onDestroy() {
+        this.mView = null;
     }
 }

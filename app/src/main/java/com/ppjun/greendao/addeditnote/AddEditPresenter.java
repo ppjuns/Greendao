@@ -1,6 +1,5 @@
 package com.ppjun.greendao.addeditnote;
 
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
@@ -38,9 +37,10 @@ public class AddEditPresenter implements AddEditContract.Presenter {
 
     @Override
     public Note queryNote() {
-        List<Note> list=mNoteDao.queryBuilder().build().list();
+        List<Note> list = mNoteDao.queryBuilder().build().list();
 
-        return list.get(list.size()-1);
+        return list.get(list.size() - 1);
+
     }
 
     @Override
@@ -51,7 +51,7 @@ public class AddEditPresenter implements AddEditContract.Presenter {
         mNoteDao.delete(note);
         ToastUtil.showTextToast(context, context.getResources().getString(R.string.delete_success));
 
-        ((Activity) context).finish();
+        mView.finishView();
 
     }
 

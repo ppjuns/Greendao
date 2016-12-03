@@ -1,6 +1,7 @@
 package com.ppjun.greendao.shownote;
 
 import android.content.Context;
+import android.view.Menu;
 
 import com.ppjun.greendao.base.BasePresenter;
 import com.ppjun.greendao.base.BaseView;
@@ -17,18 +18,24 @@ import java.util.List;
 public interface ShowNoteConstract {
 
     interface View extends BaseView<Presenter> {
+        void onItemClick();
+
+        void onCreateMenu(Menu menu);
+
+        void onRefeshAdapter();
+
 
     }
 
     interface Presenter extends BasePresenter {
         void add(Note note);
 
-        void delete(int id);
 
-        void update();
 
         List<Note> query();
 
         void toAddEditView(Context context);
+
+        void onDestroy();
     }
 }

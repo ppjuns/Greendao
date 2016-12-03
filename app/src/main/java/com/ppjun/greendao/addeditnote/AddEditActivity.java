@@ -2,7 +2,6 @@ package com.ppjun.greendao.addeditnote;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -12,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.ppjun.greendao.R;
+import com.ppjun.greendao.base.BaseActivity;
 import com.ppjun.greendao.shownote.Note;
 
 import java.text.SimpleDateFormat;
@@ -27,7 +27,7 @@ import butterknife.ButterKnife;
  * Created at :2016/11/24 17:05.
  */
 
-public class AddEditActivity extends AppCompatActivity implements AddEditContract.View {
+public class AddEditActivity extends BaseActivity implements AddEditContract.View {
     private static final String TAG = "AddEditActivity";
     @BindView(R.id.toolbar)
     Toolbar mToolBar;
@@ -40,30 +40,52 @@ public class AddEditActivity extends AppCompatActivity implements AddEditContrac
     Note note;
     Context mContext;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_addedit);
-        ButterKnife.bind(this);
-        mContext = this;
-        initViews();
-        getNote();
+    public AddEditActivity() {
+
     }
 
-    private void initViews() {
+  /*  @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView();
+
+
+
+    }*/
+
+    @Override
+    protected int setlayoutId(Bundle savedInstanceState) {
+        return R.layout.activity_addedit;
+    }
+
+    @Override
+    protected void initContext() {
+        ButterKnife.bind(this);
+        mContext = this;
+    }
+
+    public void initViews() {
 
         mPresenter = new AddEditPresenter(this);
         mToolBar.setTitle("");
         setSupportActionBar(mToolBar);
-
-
         mToolBar.setNavigationIcon(R.drawable.ic_left);
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                finishView();
             }
         });
+
+    }
+
+    @Override
+    protected void initDatas() {
+        getNote();
+    }
+
+    @Override
+    protected void initListeners() {
 
     }
 
@@ -87,17 +109,14 @@ public class AddEditActivity extends AppCompatActivity implements AddEditContrac
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId=item.getItemId();
+        int itemId = item.getItemId();
         if (itemId == R.id.menu_check) {
             if (TextUtils.isEmpty(mNoteContent.getText().toString())) {
-                finish();
+                finishView();
                 return true;
             }
 
-            Calendar calendar=Calendar.getInstance();
-
-            SimpleDateFormat simpleDateFormat=new SimpleDateFormat("MM-dd  HH:mm");
-            String time=simpleDateFormat.format(calendar.getTimeInMillis());
+            String time = getCurrentTime();
             if (isAdd) {
 
                 mPresenter.addNote(new Note(null, mNoteContent.getText().toString(), time));
@@ -109,19 +128,11 @@ public class AddEditActivity extends AppCompatActivity implements AddEditContrac
 
 
             }
-            if (mNoteContent.isCursorVisible()) {
-                mNoteContent.setCursorVisible(false);
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(mNoteContent.getWindowToken(), 0);
-            }
-            canEdit = false;
-            invalidateOptionsMenu();
-            note=mPresenter.queryNote();
 
-        }else if(itemId==R.id.ic_delete){
+            finishEdit();
+        } else if (itemId == R.id.ic_delete) {
 
-            mPresenter
-                    .deleteNote(mContext,note.getId());
+            mPresenter.deleteNote(mContext, note.getId());
 
         }
         return true;
@@ -154,11 +165,33 @@ public class AddEditActivity extends AppCompatActivity implements AddEditContrac
                 }
             });
 
-        }else{
+        } else {
             canEdit = true;
         }
 
     }
 
+    private String getCurrentTime() {
+        Calendar calendar = Calendar.getInstance();
 
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd  HH:mm");
+
+        return simpleDateFormat.format(calendar.getTimeInMillis());
+    }
+
+    private void finishEdit() {
+        if (mNoteContent.isCursorVisible()) {
+            mNoteContent.setCursorVisible(false);
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(mNoteContent.getWindowToken(), 0);
+        }
+        canEdit = false;
+        invalidateOptionsMenu();
+        note = mPresenter.queryNote();
+    }
+
+    @Override
+    public void finishView() {
+        finish();
+    }
 }

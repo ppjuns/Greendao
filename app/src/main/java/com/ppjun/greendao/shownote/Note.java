@@ -16,7 +16,7 @@ import org.greenrobot.greendao.annotation.Property;
  */
 
 @Entity
-public class Note implements Parcelable {
+public class Note  extends  Msg implements Parcelable {
     public static final Creator<Note> CREATOR = new Creator<Note>() {
         @Override
         public Note createFromParcel(Parcel in) {
